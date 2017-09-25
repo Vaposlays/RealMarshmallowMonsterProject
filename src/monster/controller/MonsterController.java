@@ -8,7 +8,60 @@ import monster.view.MonsterDisplay;
 public class MonsterController
 {
 	private MonsterDisplay popup;
-
+	
+	//Help make sure my program doesn't crash and burn
+	//Helper methods
+	private boolean isValidInteger(String sample)
+	{
+		boolean valid = false;
+		
+		try
+		{
+			Integer.parseInt(sample);
+			valid = true;
+		}
+		catch(NumberFormatException error)
+		{
+			popup.displayText("Only integer values are valid: " + sample + " is not.");
+		}
+		
+		return valid;
+	}
+	
+	private boolean isValidDouble(String sampleDouble)
+	{
+		boolean valid = false;
+		
+		try
+		{
+			Double.parseDouble(sampleDouble);
+			valid = true;
+		}
+		catch(NumberFormatException error)
+		{
+			popup.displayText("Only double values are valid: " + sampleDouble + "is not.");
+		}
+		
+		return valid;
+	}
+	
+	private boolean isValidBoolean(String sampleBoolean)
+	{
+		boolean valid = false;
+		
+		try
+		{
+			Boolean.parseBoolean(sampleBoolean);
+			valid = true;
+		}
+		catch(NumberFormatException error)
+		{
+			popup.displayText("Only boolean values are valid: " + sampleBoolean + "is not.");
+		}
+		
+		return valid;
+	}
+	
 	public MonsterController()
 	{
 		popup = new MonsterDisplay();
@@ -41,10 +94,17 @@ public class MonsterController
 		int specialAnswer;
 		String unconverted = popup.getResponse("How many do you want to eat?");
 		
+		if(isValidInteger(unconverted))
+		{
+			specialAnswer = Integer.parseInt(unconverted);
+		}
+		
 		specialAnswer = Integer.parseInt(unconverted);
 		
 		Scanner myScanner = new Scanner(System.in);
-		int consumed = myScanner.nextInt();
+		int consumed = 0;
+		consumed = specialAnswer;
+		
 		currentMonster.setArmCount(currentMonster.getArmCount() - consumed);
 		System.out.println("Ok, now " + currentMonster.getName() + " has " + currentMonster.getArmCount() + " arms left.");
 		
@@ -74,7 +134,6 @@ public class MonsterController
 		if(consumed < 0)
 		{
 			System.out.println("You can't eat something that isnt there you idiot.");
-			consumed = 0;
 		}
 		else if(consumed == 0)
 		{

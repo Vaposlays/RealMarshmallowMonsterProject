@@ -14,7 +14,7 @@ public class MarshmallowMonster
 		//Unless we specify values all data members
 		//are a zero, false, or null
 	}
-	
+		//Helps get my monsters name and all his features
 	public MarshmallowMonster(String name, int eyeCount, int armCount, double tentacleAmount, boolean hasBloop)
 	{
 		this.name = name;
@@ -73,16 +73,6 @@ public class MarshmallowMonster
 	{
 		this.hasBloop = hasBloop;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String toString()
