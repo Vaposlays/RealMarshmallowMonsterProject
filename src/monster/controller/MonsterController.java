@@ -3,11 +3,25 @@ package monster.controller;
 import java.util.Scanner;
 
 import monster.model.MarshmallowMonster;
+
 import monster.view.MonsterDisplay;
+
+import java.util.ArrayList;
+
+import java.util.List;
 
 public class MonsterController
 {
+	
 	private MonsterDisplay popup;
+	private List<MarshmallowMonster> monsterList;
+	public MonsterController()
+	{
+		popup= new MonsterDisplay();
+		//Conectors initialize data members
+		monsterList = new ArrayList<MarshmallowMonster>();
+	}
+	
 	
 	//Help make sure my program doesn't crash and burn
 	//Helper methods
@@ -62,13 +76,22 @@ public class MonsterController
 		return valid;
 	}
 	
-	public MonsterController()
-	{
-		popup = new MonsterDisplay();
-	}
-	
 	public void start()
 	{
+//		boolean finished = true;
+//		int count = 0;
+//		while(count < 100)	
+//		{
+//			popup.displayText("I am so neat");
+//			count += 1;
+//		}
+//		
+//		for(int loop = 0; loop < 15; loop +=1)
+//		{
+//			popup.displayText("I am looping " + (loop + 1) + " times out of 15");
+//		}
+		
+		
 		MarshmallowMonster sample = new MarshmallowMonster();
 //		System.out.println(sample);
 		popup.displayText(sample.toString());
@@ -81,7 +104,31 @@ public class MonsterController
 		realMonster.setTentacleAmount(0);
 //		System.out.println(realMonster);
 		popup.displayText(realMonster.toString());
+		monsterList.add(realMonster);
+		monsterList.add(sample);
+		testList();
+		
 		interactWithTheMonster(realMonster);
+	}
+	
+	private void testList()
+	{
+		for(int index = 0; index < monsterList.size(); index++)
+		{
+			MarshmallowMonster currentMonster = monsterList.get(index);
+			popup.displayText(currentMonster.getName());
+			String newName = popup.getResponse("What should my new name be???");
+			currentMonster.setName(newName);
+			popup.displayText(currentMonster.getName());
+		}
+		
+		for(MarshmallowMonster current : monsterList)
+		{
+			popup.displayText(current.getName());
+			String newName = popup.getResponse("What should my new new name be???");
+			current.setName(newName);
+			popup.displayText(current.getName());
+		}
 	}
 	
 	private void interactWithTheMonster(MarshmallowMonster currentMonster)
@@ -93,6 +140,12 @@ public class MonsterController
 //		System.out.println("How many do you want to eat?");
 		int specialAnswer;
 		String unconverted = popup.getResponse("How many do you want to eat?");
+		
+		while(!isValidInteger(unconverted))
+		{
+			popup.displayText("Try again!");
+			unconverted = popup.getResponse("How many arms?????");
+		}
 		
 		if(isValidInteger(unconverted))
 		{
